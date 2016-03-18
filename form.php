@@ -3,7 +3,7 @@
     mb_internal_encoding('UTF-8');
     $pageTitle = 'Forma';
     include './include/header.php';
-    $groups = array(1=>'Prijatelji', 2=>'Kolege', 3=>'Bivse', 4=>'Buduce');
+    
             
     
    if($_POST){
@@ -14,7 +14,10 @@
      */
        //funkcija trim() skracuje string za nepotrebne intervale i simbole '    boris    ', 'boris'
        $username = trim($_POST['username']);
+       //funkcija srt_replace() prima tri parametra, tazeni simbol , simbol sa kojim menajmo trazeni sibol i treci gde trazimo taj sibol
+       $username = str_replace('!', '', $username);
        $phone    = trim($_POST['phone']);
+       $phone = str_replace('!', '', $phone);
        $selectedGroup = (int)$_POST['groupe'];
        
        //deklarisemo promenljivu $error i dajemo vrednost false, nakon toga u if konstrukciji ako imamo neku gresku dajemo vrednost true
@@ -54,8 +57,19 @@
         */
        if (!$error){
            
-           $results = $username.'!'.$phone.'!'.$selectedGroup;
-           echo $results;
+           /*
+            * Definisemo promenljivu $results i u njoj dodajemo promenljive
+            *  koje su prosle normalizaciju i validaciju 
+            *  $username $phone i $selectedGroupe, ali isto
+            * tako da bi smo razgranicili stringove koji koje upisujemo u nas falj
+            * dodajemo specijalni simbol '!', ali ako neko u formi napise simbol ! on ce 
+            * nam poremetti strukturu podataka koju treba da zapisujemo, zato u normalizaciji podataka 
+            * trebamo zameniti ovaj specijalni simbol ! to cemo uraditi sa funkcijom str_replace();
+            */
+           $results = $username.'!'.$phone.'!'.$selectedGroup."\n";
+           if (file_put_contents('data.txt', $results, FILE_APPEND)){
+               echo 'Zapis je uspesan!';
+           }
        }
        
        

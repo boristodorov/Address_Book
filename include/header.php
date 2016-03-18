@@ -1,3 +1,7 @@
+<?php
+    require '/constants.php';
+?>
+
 <html>
     <head>
         <title><?=$pageTitle;?></title>
