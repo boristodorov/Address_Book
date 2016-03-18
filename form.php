@@ -31,7 +31,9 @@
        }
        
        /*
-        *  array_key_exists() funkcija prosto proverljava da li postoji dati kljuc u datom array-u 
+        *  array_key_exists() funkcija prosto proverava da li postoji dati kljuc u datom array-u, kao argumente 
+        * ova funkcija uzima promenljivu koja cuva kljuc i array u kome se nalazi, ali kada bi ova funkcija 
+        * bila tacna onda bi usli u if konstrukciju, zato okrecemo logiku 
         *        
         */
        if(!array_key_exists($selectedGroup, $groups)){
